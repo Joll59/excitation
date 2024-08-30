@@ -67,7 +67,6 @@ const Reference = (
 
     const showReference = () => {
         const pdfViewer = iframeRef.current.contentWindow?.PDFViewerApplication;
-        console.log("pdfViewerApplication: ", pdfViewer);
         
         // when you click on a specific citation
         // this runs to find the relevant document, page, and bounding box data
