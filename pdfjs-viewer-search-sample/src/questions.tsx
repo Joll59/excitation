@@ -1,18 +1,13 @@
-import { useState } from 'react';
 import { docIntResponse, BoundingRegion } from "./interfaces";
 import di from "../../di.json"
 
-const response = di as docIntResponse;
-
-const Reference = (
-    props
-) => {
-    const { reference, iframeRef } = props;
-    const [shown, setShown] = useState(false);
+const Reference = (props) => {
+    const { reference, referenceIndex, questionIndex, iframeRef, shown, setShown } = props;
 
     // fetch DI response from a db
     // actually for now, we just import the di.json file
     // later we'll need to do some logic about pulling the relevant file
+    const response = di as docIntResponse;
     const paragraphs = response.analyzeResult.paragraphs;
 
     // loop through paragraphs object
@@ -43,7 +38,6 @@ const Reference = (
     const findCanvasAndDraw = () => {
         // we'll find the right page to grab the attached canvas
         const pages = iframeRef.current.contentDocument?.getElementsByClassName("page") as HTMLCollectionOf<Element>;
-        console.log("pages: ", pages);
 
         console.log("looking for canvas...");
         let canvas;
@@ -59,7 +53,8 @@ const Reference = (
             const highlightContext = canvas?.getContext('2d');
             const scale = parseFloat(window.getComputedStyle(canvas).getPropertyValue('--scale-factor') || '1');
             if (highlightContext) draw(highlightContext, scale, polygon);
-            setShown(true);
+            shown[questionIndex][referenceIndex] = true;
+            setShown(shown);
         } else {
             setTimeout(findCanvasAndDraw, 100);
         }
@@ -74,7 +69,7 @@ const Reference = (
         pdfViewer.page = pageNumber;
 
         // if we've already drawn the reference box once, we don't need to redraw
-        if (!shown) findCanvasAndDraw();
+        if (!shown[questionIndex][referenceIndex]) findCanvasAndDraw();
     }
 
     return (
@@ -100,7 +95,7 @@ export function QuestionAnswer(props) {
 
     for (let index = 0; index < qA.references.length; index++) {
         returnArray.push(
-            <Reference key={Math.random()} reference={qA.references[index]} {...otherProps}/>
+            <Reference key={Math.random()} reference={qA.references[index]} referenceIndex={index} {...otherProps}/>
         )
     }
 

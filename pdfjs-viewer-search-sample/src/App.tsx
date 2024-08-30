@@ -33,6 +33,16 @@ function App() {
     }
   ]
 
+  const unShown: boolean[][] = [];
+  for (let i = 0; i < qA.length; i++) {
+    unShown.push([]);
+    for (let j = 0; j < qA[i].references.length; j++) {
+      unShown[i].push(false);
+    }
+  }
+  
+  const [shown, setShown] = useState(unShown);
+
   const previousQuestion = (page: number) => {
     if (page === 1) { return; }
     else { setQuestionPage(page - 1); }
@@ -53,7 +63,7 @@ function App() {
         &nbsp;
         <button onClick={() => nextQuestion(questionPage)}>Next</button>
         <div>
-          <QuestionAnswer qA={qA[questionPage - 1]} iframeRef={iframeRef} />
+          <QuestionAnswer qA={qA[questionPage - 1]} questionIndex={questionPage - 1} iframeRef={iframeRef} shown={shown} setShown={setShown} />
         </div>
       </div>
       <div id="viewer">
