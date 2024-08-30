@@ -40,8 +40,8 @@ function App() {
       unShown[i].push(false);
     }
   }
-  
   const [shown, setShown] = useState(unShown);
+
 
   const previousQuestion = (page: number) => {
     if (page === 1) { return; }

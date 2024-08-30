@@ -28,7 +28,8 @@
   font-family: Arial;
 }
 
-#viewer {
+#viewer,
+#-highlight-canvas {
   grid-column: 2;
 }
 
