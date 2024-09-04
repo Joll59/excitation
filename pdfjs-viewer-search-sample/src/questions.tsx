@@ -164,6 +164,7 @@ export function QuestionAnswer(props) {
     }
 
     // Combine two squared up polygons and return the combination
+    // if the two polygons are NOT adjacent you will get weird results!!!
     const combinePolygons = (poly0: number[], poly1: number[]) => {
        let x = [
             Math.min(poly0[0], poly1[0]),
@@ -201,30 +202,23 @@ export function QuestionAnswer(props) {
             }
         ]
 
-        for (let i = 1; i < boundingRegions.length; i++) {
-            for (let j = 0; j < condensedRegions.length; j++) {
-                boundingRegions[i].polygon = squareUp(boundingRegions[i].polygon);
+        let last = condensedRegions.length - 1;
+        for (let index = 1; index < boundingRegions.length; index++) {
+            boundingRegions[index].polygon = squareUp(boundingRegions[index].polygon);
 
-                if (condensedRegions[j].pageNumber === boundingRegions[i].pageNumber) {
-                    // Here, we are either:
-                    // - adding to an existing polygon, or
-                    // - moving to a new column or area on the same page
-                    if (adjacent(condensedRegions[j].polygon, boundingRegions[i].polygon)) {
-                        // adding to existing
-                        condensedRegions[j].polygon = combinePolygons(condensedRegions[j].polygon, boundingRegions[i].polygon);
-                    } else if (j + 1 === condensedRegions.length ||
-                               condensedRegions[j + 1].pageNumber != boundingRegions[i].pageNumber){
-                        // if this is the last of the condensed regions, or
-                        // if this is the last condensed region on this page:
-                        // New column or similar
-                        condensedRegions.push(boundingRegions[i]);
-                    }
-                } else if (j === condensedRegions.length) {
-                    // if this is the last of the condensed regions:
-                    // new page
-                    condensedRegions.push(boundingRegions[i]);
+            if (condensedRegions[last].pageNumber === boundingRegions[index].pageNumber) {
+                if (adjacent(condensedRegions[last].polygon, boundingRegions[index].polygon)) {
+                    // adding to existing polygon
+                    condensedRegions[last].polygon = combinePolygons(condensedRegions[last].polygon, boundingRegions[index].polygon);
+                } else {
+                    // New column or similar
+                    condensedRegions.push(boundingRegions[index]);
+                    last++;
                 }
-
+            } else {
+                // new page
+                condensedRegions.push(boundingRegions[index]);
+                last++;
             }
         }
         return condensedRegions;
@@ -246,6 +240,10 @@ export function QuestionAnswer(props) {
             return;
         }
         console.log("boundingRegions:", boundingRegions);
+
+        // do a thing with the found boundingRegions
+
+        // save to references
     }
 
     let returnArray = [];
