@@ -33,3 +33,27 @@ npm run dev
 
 Then aim your browser at the indicated VITE dev endpoint, which for me is [http://localhost:5173/](http://localhost:5173/)
 
+## Architecture Explanation
+
+### User Interface
+
+- App Component: The main component that renders the application. It includes the QuestionAnswer component.
+  - QuestionAnswer Component: Handles the display of questions and answers, and manages interactions like showing references.
+
+### Business Logic
+
+Interfaces: Defines the data structures used in the application, such as QA, BoundingRegion, and Reference.
+
+### Data Access
+
+di.json: A JSON file that containing data used by the application.
+
+### External Services
+
+PDF.js Viewer: An iframe that loads and displays PDF documents. It interacts with the application to show specific pages and highlight regions.
+
+### Key Interactions
+
+- The App component initializes the application and manages state.
+- The QuestionAnswer component handles user interactions and displays questions, answers, and references.
+  - When a reference is clicked, the QuestionAnswer component interacts with the PDF.js Viewer to display the relevant document and highlight specific regions.

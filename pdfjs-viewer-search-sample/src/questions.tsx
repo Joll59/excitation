@@ -42,8 +42,8 @@ const Reference = (props) => {
         console.log("looking for canvas...");
         let canvas;
         for (let index = 0; index < pages.length; index++) {
-            let page = pages[index] as HTMLElement;
-            let canvasPageNumber = Number(page.dataset.pageNumber);
+            const page = pages[index] as HTMLElement;
+            const canvasPageNumber = Number(page.dataset.pageNumber);
             if (canvasPageNumber == pageNumber) canvas = page.getElementsByTagName("canvas")[0] as HTMLCanvasElement;
         }
 
@@ -62,7 +62,7 @@ const Reference = (props) => {
 
     const showReference = () => {
         const pdfViewer = iframeRef.current.contentWindow?.PDFViewerApplication;
-        
+
         // when you click on a specific citation
         // this runs to find the relevant document, page, and bounding box data
         pdfViewer.url = reference.fileName;
@@ -137,9 +137,9 @@ export function QuestionAnswer(props) {
         // The rectangles don't overlap if one rectangle's minimum in some
         // dimension is greater than the other's maximum in that dimension
         const noOverlap = x0[0] > x1[1] ||
-                          x1[0] > x0[1] ||
-                          y0[0] > y1[1] ||
-                          y1[0] > y0[1];
+            x1[0] > x0[1] ||
+            y0[0] > y1[1] ||
+            y1[0] > y0[1];
         return !noOverlap;
     }
 
@@ -155,15 +155,15 @@ export function QuestionAnswer(props) {
 
     // Combine two squared up polygons and return the combination
     const combinePolygons = (poly0: number[], poly1: number[]) => {
-       let x = [
+        let x = [
             Math.min(poly0[0], poly1[0]),
             Math.max(poly0[2], poly1[2])
-       ];
-       let y = [
+        ];
+        let y = [
             Math.min(poly0[1], poly1[1]),
             Math.max(poly0[5], poly1[5])
-       ]
-       return polygonize(x, y);
+        ]
+        return polygonize(x, y);
     }
 
     // Return a polygon with sides that are parallel to the major axes
@@ -201,7 +201,7 @@ export function QuestionAnswer(props) {
                         // adding to existing
                         condensedRegions[j].polygon = combinePolygons(condensedRegions[j].polygon, boundingRegions[i].polygon);
                     } else if (j === condensedRegions.length ||
-                               condensedRegions[j+1].pageNumber != boundingRegions[i].pageNumber){
+                        condensedRegions[j + 1].pageNumber != boundingRegions[i].pageNumber) {
                         // if this is the last of the condensed regions, or
                         // if this is the last condensed region on this page:
                         // New column or similar
@@ -236,7 +236,7 @@ export function QuestionAnswer(props) {
         console.log("boundingRegions:", boundingRegions);
     }
 
-    let returnArray = [];
+    const returnArray = [];
     returnArray.push(
         <div key="questionDiv" id="questionDiv"><p id="question">Question: </p><p id="question-text">{qA.question}</p></div>
     );
