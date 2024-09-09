@@ -1,4 +1,4 @@
-export interface docIntResponse {
+export interface DocumentIntelligenceResponse {
   status: string;
   createdDateTime: string;
   lastUpdatedDateTime: string;
