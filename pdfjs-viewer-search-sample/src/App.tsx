@@ -53,12 +53,6 @@ function App() {
     if (page === qA.length) { return; }
     else { setQuestionPage(page + 1); }
   }
-  const getSelection = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    event.preventDefault();
-    console.log(iframeRef.current?.contentWindow?.getSelection()?.toString());
-    setSelection(iframeRef.current?.contentWindow?.getSelection()?.toString() || "");
-  }
-
 
   const url = `./pdfjs/web/viewer.html?file=.%2Fcompressed.tracemonkey-pldi-09.pdf#&zoom=page-fit`;
   return (
@@ -70,12 +64,7 @@ function App() {
         &nbsp;
         <button onClick={() => nextQuestion(questionPage)}>Next</button>
         <div>
-          <QuestionAnswer qA={qA[questionPage - 1]} questionIndex={questionPage - 1} iframeRef={iframeRef} shown={shown} setShown={setShown} />
-          <button onClick={(event) => getSelection(event)}>Add Reference from Selection</button>
-          <div>
-            <h3>Selection</h3>
-            {selection}
-          </div>
+          <QuestionAnswer qA={qA[questionPage - 1]} questionIndex={questionPage - 1} iframeRef={iframeRef} shown={shown} setShown={setShown} selection={selection} setSelection={setSelection} />
         </div>
       </div>
       <div id="viewer">
