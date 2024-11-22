@@ -27,3 +27,4 @@ dist-ssr
 
 # Thanks, MacOS
 .DS_Store
+.env
