@@ -2,9 +2,9 @@ import { LogLevel } from '@azure/msal-browser';
 
 export const msalConfig = {
     auth: {
-        clientId: process.env.AZURE_CLIENT_ID || '',
-        authority: process.env.AZURE_AUTHORITY || '',
-        redirectUri: process.env.REDIRECT_URI || '',
+        clientId: process.env.REACT_APP_AZURE_CLIENT_ID || '',
+        authority: process.env.REACT_APP_AZURE_AUTHORITY || '',
+        redirectUri: process.env.REACT_APP_REDIRECT_URI || '',
         clientSecret: process.env.MICROSOFT_PROVIDER_AUTHENTICATION_SECRET || '',
     },
 
