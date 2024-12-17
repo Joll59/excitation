@@ -321,11 +321,11 @@ export const returnTextPolygonsFromDI = (
 // 0 if poly is sitatued within/about refPoly
 // + if poly is situated later in the page than refPoly
 const comparePolygons = (poly: number[], refPoly: number[]) => {
-  const x = [ poly[0], poly[2] ];
-  const y = [ poly[1], poly[5] ];
+  const x = [poly[0], poly[2]];
+  const y = [poly[1], poly[5]];
 
-  const refX = [ refPoly[0], refPoly[2] ];
-  const refY = [ refPoly[1], refPoly[5] ];
+  const refX = [refPoly[0], refPoly[2]];
+  const refY = [refPoly[1], refPoly[5]];
 
   // first: how do they compare vertically?
   // poly is earlier in the column
@@ -467,7 +467,7 @@ const splitIntoColumns = (lines: Line[]) => {
     // is this the last line and therefore the end of the last column?
     // OR, is lines[currentLine + 1] a new column/section?
     if (currentLine == lines.length - 1 ||
-        !adjacent(lines[currentLine + 1].polygon, lines[currentLine].polygon)) {
+      !adjacent(lines[currentLine + 1].polygon, lines[currentLine].polygon)) {
       // let's wrap up the current column.
       const colLines = lines.slice(firstLineOfCol, currentLine + 1);
       // we combine all polys to make sure we capture the full width of the column
@@ -550,8 +550,8 @@ export function findUserSelection(
   let { top, left, bottom, right } = range.getBoundingClientRect();
   const multiplier = 72;
 
-  const dx = viewer.left - window.scrollX;
-  const dy = viewer.top - window.scrollY;
+  const dx = viewer.left! - window.scrollX;
+  const dy = viewer.top! - window.scrollY;
 
   top = round((top - dy) / multiplier, 4);
   bottom = round((bottom - dy) / multiplier, 4);
